@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-1.7.js" type="text/javascript"></script>
+	<script src="brisk.js" type="text/javascript"></script>
+</head>
+<body>
+<a href="#" class="like">+</a>
+<a href="#" class="unlike">-</a>
+<script type="text/javascript">
+
+	var actions = {
+		likeFail:function (event, element, data, prevResult) {
+			console.log('likeFail', event, element, data, prevResult);
+			return 'likeFail';
+		},
+		like:function (event, element, data, prevResult) {
+			var dfd = $.Deferred();
+			setTimeout(function () {
+				console.log('like', event, element, data, prevResult);
+				dfd.resolve('like')
+			}, 1000)
+			return dfd;
+		},
+		throwTest:function (event, element, data, prevResult) {
+			var dfd = $.Deferred();
+			console.log('throw-test', event, element, data, prevResult);
+			dfd.reject('throw-test')
+			return dfd;
+		},
+		unlike:function (event, element, data, prevResult) {
+			var dfd = $.Deferred();
+			setTimeout(function () {
+				console.log('unlike', event, element, data, prevResult);
+				dfd.resolve('unlike')
+			}, 1000)
+			return dfd;
+		},
+		addLoading:function (event, element, data, prevResult) {
+			console.log('addLoading', event, element, data, prevResult);
+			return "addLoading";
+		},
+		removeLoading:function (event, element, data, prevResult) {
+			console.log('removeLoading', event, element, data, prevResult);
+			return 'removeLoading';
+		}
+	}
+
+	var pageConfig = {
+		'.unlike':['addLoading', 'unlike', 'throwTest', 'removeLoading'],
+		'.like':{
+			click:{
+				action:['like'],
+				prepare:'addLoading',
+				done:'removeLoading',
+				fail:['likeFail']
+			}
+		},
+		'.test':"test"
+	}
+
+	$(document).ready(function () {
+		$.brisk(pageConfig, actions);
+	});
+</script>
+</body>
+</html>
