@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="http://code.jquery.com/jquery-1.7.js" type="text/javascript"></script>
+	<script src="../../brisk.js" type="text/javascript"></script>
+	<script src="./actions/ns.js" type="text/javascript"></script>
+	<script src="./actions/addLoader.js" type="text/javascript"></script>
+	<script src="./actions/ajaxError.js" type="text/javascript"></script>
+	<script src="./actions/rateSuccess.js" type="text/javascript"></script>
+	<script src="./actions/dataGrabber.js" type="text/javascript"></script>
+	<script src="./actions/formGrabber.js" type="text/javascript"></script>
+	<script src="./actions/beforeRate.js" type="text/javascript"></script>
+	<script src="./actions/removeLoader.js" type="text/javascript"></script>
+	<script src="./actions/render.js" type="text/javascript"></script>
+	<script src="./actions/smoothRender.js" type="text/javascript"></script>
+</head>
+<body>
+<a href="#" class="like">&hearts;&nbsp;<em>1</em></a>
+<script type="text/javascript">
+
+	var pageConfig = {
+		'.like':{
+			click:{
+				action:['addLoader', 'dataGrabber', 'beforeRate', 'rateSuccess', 'render'],
+				always:'removeLoader'
+			}
+		}
+	}
+
+	$(document).ready(function () {
+		$.brisk(pageConfig, window.App.actions);
+	});
+</script>
+</body>
+</html>

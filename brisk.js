@@ -89,7 +89,8 @@
 						normalized[selector] = normalized[selector] || {};
 						normalized[selector][event] = {
 							actions:(innerHandlers.prepare || []).concat(innerHandlers.action || [], innerHandlers.done || []),
-							fails:innerHandlers.fail || []
+							fails:innerHandlers.fail || [],
+							always:innerHandlers.always || []
 						}
 					}
 				});
@@ -122,6 +123,13 @@
 									for (var i = -1, len = params.fails.length; ++i < len;) {
 										if ($.isFunction(actionConfig[params.fails[i]])) {
 											actionConfig[params.fails[i]](e, element, data);
+										}
+									}
+								})
+								.always(function (data) {
+									for (var i = -1, len = params.always.length; ++i < len;) {
+										if ($.isFunction(actionConfig[params.always[i]])) {
+											actionConfig[params.always[i]](e, element, data);
 										}
 									}
 								});
