@@ -111,7 +111,7 @@
 						if ($.isFunction(actionConfig[params.actions[i]])) {
 							!function (i) {
 								actions.push(function () {
-									return actionConfig[params.actions[i]](e, element, {}, arguments[arguments.length - 1])
+									return actionConfig[params.actions[i]](e, element, arguments[arguments.length - 1])
 								});
 							}(i);
 						}
@@ -121,7 +121,7 @@
 								.fail(function (data) {
 									for (var i = -1, len = params.fails.length; ++i < len;) {
 										if ($.isFunction(actionConfig[params.fails[i]])) {
-											actionConfig[params.fails[i]](e, element, {}, data);
+											actionConfig[params.fails[i]](e, element, data);
 										}
 									}
 								});

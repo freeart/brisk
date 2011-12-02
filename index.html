@@ -10,38 +10,38 @@
 <script type="text/javascript">
 
 	var actions = {
-		likeFail:function (event, element, data, prevResult) {
-			console.log('likeFail', event, element, data, prevResult);
+		likeFail:function (event, element, prevResult) {
+			console.log('likeFail', event, element, prevResult);
 			return 'likeFail';
 		},
-		like:function (event, element, data, prevResult) {
+		like:function (event, element, prevResult) {
 			var dfd = $.Deferred();
 			setTimeout(function () {
-				console.log('like', event, element, data, prevResult);
+				console.log('like', event, element, prevResult);
 				dfd.resolve('like')
 			}, 1000)
 			return dfd;
 		},
-		throwTest:function (event, element, data, prevResult) {
+		throwTest:function (event, element, prevResult) {
 			var dfd = $.Deferred();
-			console.log('throw-test', event, element, data, prevResult);
+			console.log('throw-test', event, element, prevResult);
 			dfd.reject('throw-test')
 			return dfd;
 		},
-		unlike:function (event, element, data, prevResult) {
+		unlike:function (event, element, prevResult) {
 			var dfd = $.Deferred();
 			setTimeout(function () {
-				console.log('unlike', event, element, data, prevResult);
+				console.log('unlike', event, element, prevResult);
 				dfd.resolve('unlike')
 			}, 1000)
 			return dfd;
 		},
-		addLoading:function (event, element, data, prevResult) {
-			console.log('addLoading', event, element, data, prevResult);
+		addLoading:function (event, element, prevResult) {
+			console.log('addLoading', event, element, prevResult);
 			return "addLoading";
 		},
-		removeLoading:function (event, element, data, prevResult) {
-			console.log('removeLoading', event, element, data, prevResult);
+		removeLoading:function (event, element, prevResult) {
+			console.log('removeLoading', event, element, prevResult);
 			return 'removeLoading';
 		}
 	}
