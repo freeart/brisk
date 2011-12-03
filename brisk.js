@@ -45,6 +45,21 @@
 		return dfrd;
 	}
 
+	var ns = function (src, path) {
+		var o, d;
+		if (path === undefined) return {};
+		if (path.indexOf('.') != -1) {
+			d = path.split(".");
+			o = src[d[0]] = src[d[0]] || {};
+			$.each(d.slice(1), function (index, elPath) {
+				o = o[elPath] = o[elPath] || {};
+			});
+		} else {
+			o = src[path] = src[path] || {};
+		}
+		return o;
+	}
+
 	$.fn.brisk = $.brisk = function brisk(rawConfig, actionConfig) {
 		var $root = this === $ ? $(document) : this;
 
@@ -90,7 +105,8 @@
 						normalized[selector][event] = {
 							actions:(innerHandlers.prepare || []).concat(innerHandlers.action || [], innerHandlers.done || []),
 							fails:innerHandlers.fail || [],
-							always:innerHandlers.always || []
+							always:innerHandlers.always || [],
+							done:innerHandlers.done || []
 						}
 					}
 				});
@@ -108,31 +124,45 @@
 					var element = this;
 
 					var actions = [];
+					var steps = {};
+					var lastArg;
+
 					for (var i = -1, len = params.actions.length; ++i < len;) {
-						if ($.isFunction(actionConfig[params.actions[i]])) {
-							!function (i) {
+						var fn = ns(actionConfig, params.actions[i]);
+						if ($.isFunction(fn)) {
+							!function (fn, step) {
 								actions.push(function () {
-									return actionConfig[params.actions[i]](e, element, arguments[arguments.length - 1])
+									if (step > 0) {
+										steps[params.actions[step - 1]] = arguments[step - 1];
+									}
+									var args = [].slice.call(arguments);
+									lastArg = undefined;
+									while (args.length && lastArg === undefined) {
+										lastArg = args.pop();
+									}
+									return fn(e, element, lastArg, steps);
 								});
-							}(i);
+							}(fn, i);
 						}
 					}
 					if (actions.length) {
 						waterfall.apply(this, actions)
 								.fail(function (data) {
 									for (var i = -1, len = params.fails.length; ++i < len;) {
-										if ($.isFunction(actionConfig[params.fails[i]])) {
-											actionConfig[params.fails[i]](e, element, data);
+										var fn = ns(actionConfig, params.fails[i]);
+										if ($.isFunction(fn)) {
+											fn(e, element, data, steps);
 										}
 									}
 								})
-								.always(function (data) {
+								.always(function () {
 									for (var i = -1, len = params.always.length; ++i < len;) {
-										if ($.isFunction(actionConfig[params.always[i]])) {
-											actionConfig[params.always[i]](e, element, data);
+										var fn = ns(actionConfig, params.always[i]);
+										if ($.isFunction(fn)) {
+											fn(e, element, lastArg, steps);
 										}
 									}
-								});
+								})
 					}
 				});
 			});
