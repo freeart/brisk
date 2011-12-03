@@ -5,7 +5,7 @@ App.actions.rate = {
 		setTimeout(function () {
 			console.log('rate.success', prevArgs, steps);
 			dfd.resolve({
-				".like":{
+				".success .like":{
 					"html":'<a href="#" class="like" data-ready="1" data-id="42" data-rate="2" role="block">&hearts;&nbsp;<em>2</em></a>',
 					"mode":"replace"
 				}

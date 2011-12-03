@@ -8,11 +8,20 @@
 	<script src="./actions/rate.js" type="text/javascript"></script>
 </head>
 <body>
-<a href="#" class="like" data-id="42" data-rate="1" role="block">&hearts;&nbsp;<em>1</em></a>
+<div class="success">Success: <a href="#" class="like" data-id="42" data-rate="1" role="block">&hearts;&nbsp;<em>1</em></a></div>
+<div class="error">Error: <a href="#" class="like" data-id="42" data-rate="1" role="block">&hearts;&nbsp;<em>1</em></a></div>
 <script type="text/javascript">
 
 	var pageConfig = {
-		'.like':{
+		'.success .like':{
+			click:{
+				action:['common.addLoader', 'common.dataGrabber', 'rate.before', 'rate.success', 'common.render'],
+				always:'common.removeLoader',
+				fail:'rate.rollback',
+				done:'common.success'
+			}
+		},
+		'.error .like':{
 			click:{
 				action:['common.addLoader', 'common.dataGrabber', 'rate.before', 'rate.error', 'common.render'],
 				always:'common.removeLoader',
