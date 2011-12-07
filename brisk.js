@@ -120,7 +120,7 @@
 		$.each(normalized, function (selector, handlers) {
 			$.each(handlers, function (event, params) {
 
-				$root.on(event, selector, function (e) {
+				$root.on(event, ($.inArray(selector, ['window', 'body', 'document']) > -1 ? undefined : selector), function (e) {
 					if (brisk.options.dontPrevent === false || $.inArray(e.type, brisk.options.dontPrevent) == -1) {
 						e.preventDefault();
 						e.stopPropagation();
