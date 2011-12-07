@@ -71,13 +71,16 @@
 			if (typeof handlers === "string") {
 				normalized[selector] = {
 					click:{
-						actions:[handlers]
+						actions:[handlers],
+						always:[],
+						fails:[]
 					}
 				}
 			} else if ($.isArray(handlers)) {
 				normalized[selector] = {
 					click:{
 						actions:handlers,
+						always:[],
 						fails:[]
 					}
 				}
@@ -87,12 +90,14 @@
 						normalized[selector] = normalized[selector] || {};
 						normalized[selector][event] = {
 							actions:[innerHandlers],
+							always:[],
 							fails:[]
 						}
 					} else if ($.isArray(innerHandlers)) {
 						normalized[selector] = normalized[selector] || {};
 						normalized[selector][event] = {
 							actions:innerHandlers,
+							always:[],
 							fails:[]
 						};
 					} else if ($.isPlainObject(innerHandlers)) {
@@ -105,8 +110,7 @@
 						normalized[selector][event] = {
 							actions:(innerHandlers.prepare || []).concat(innerHandlers.action || [], innerHandlers.done || []),
 							fails:innerHandlers.fail || [],
-							always:innerHandlers.always || [],
-							done:innerHandlers.done || []
+							always:innerHandlers.always || []
 						}
 					}
 				});
