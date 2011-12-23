@@ -15,7 +15,7 @@
 	var pageConfig = {
 		'.success .like':{
 			click:{
-				action:['common.addLoader', 'common.dataGrabber', 'rate.before', 'rate.success', 'common.render'],
+				action:['common.stopEvent', 'common.addLoader', 'common.dataGrabber', 'rate.before', 'rate.success', 'common.render'],
 				always:'common.removeLoader',
 				fail:'rate.rollback',
 				done:'common.success'
@@ -23,7 +23,7 @@
 		},
 		'.error .like':{
 			click:{
-				action:['common.addLoader', 'common.dataGrabber', 'rate.before', 'rate.error', 'common.render'],
+				action:['common.stopEvent', 'common.addLoader', 'common.dataGrabber', 'rate.before', 'rate.error', 'common.render'],
 				always:'common.removeLoader',
 				fail:'rate.rollback',
 				done:'common.success'

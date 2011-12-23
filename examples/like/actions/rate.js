@@ -7,7 +7,7 @@ App.actions.rate = {
 			dfd.resolve({
 				".success .like":{
 					"html":'<a href="#" class="like" data-ready="1" data-id="42" data-rate="2" role="block">&hearts;&nbsp;<em>2</em></a>',
-					"mode":"replace"
+					"mode":"replaceWith"
 				}
 			});
 		}, 1000);
