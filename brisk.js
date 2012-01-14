@@ -1,3 +1,9 @@
+/**
+ * Brisk
+ *
+ * @author Landgraf Paul, landgraf.paul@gmail.com
+ */
+
 (function ($) {
 	/**
 	 * Runs functions given in arguments in series, each functions passing their results to the next one.
