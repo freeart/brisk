@@ -85,7 +85,7 @@
 			for (var i = -1, len = rawConfig.length; ++i < len;) {
 				var fn = ns(actionConfig, rawConfig[i]);
 				if ($.isFunction(fn)) {
-					fn();
+					fn.call(actionConfig);
 				}
 			}
 		}
@@ -214,7 +214,7 @@
 										while (args.length && lastArg === undefined) {
 											lastArg = args.pop();
 										}
-										return fn(e, element, lastArg, steps);
+										return fn.call(actionConfig, e, element, lastArg, steps);
 									});
 								}(fn, i);
 							}
@@ -222,10 +222,11 @@
 						if (actions.length) {
 							waterfall.apply(this, actions)
 								.fail(function (data) {
+									lastArg = data;
 									for (var i = -1, len = params.fails.length; ++i < len;) {
 										var fn = ns(actionConfig, params.fails[i]);
 										if ($.isFunction(fn)) {
-											fn(e, element, data, steps);
+											fn.call(actionConfig, e, element, data, steps);
 										}
 									}
 								})
@@ -233,7 +234,7 @@
 									for (var i = -1, len = params.always.length; ++i < len;) {
 										var fn = ns(actionConfig, params.always[i]);
 										if ($.isFunction(fn)) {
-											fn(e, element, lastArg, steps);
+											fn.call(actionConfig, e, element, lastArg, steps);
 										}
 									}
 								})
