@@ -12,7 +12,7 @@
 	 * @author Dmitry (dio) Levashov, dio@std42.ru
 	 * @return jQuery.Deferred
 	 */
-	var waterfall = function () {
+	var waterfall = $.waterfall = function () {
 		var steps = [],
 			dfrd = $.Deferred(),
 			pointer = 0;
@@ -22,7 +22,7 @@
 				var args = [].slice.apply(arguments), d;
 
 				if (typeof(a) == 'function') {
-					if (!((d = a.apply(null, args)) && d.promise)) {
+					if (!((d = a.apply(null, args)) && d.hasOwnProperty('promise'))) {
 						d = $.Deferred()[d === false ? 'reject' : 'resolve'](d);
 					}
 				} else if (a && a.promise) {
@@ -88,10 +88,11 @@
 		 * { ..., config: ['system.init', 'dropdown.init'], ... }
 		 */
 		if ($.isArray(rawConfig)) {
+			var prevResult;
 			for (var i = -1, len = rawConfig.length; ++i < len;) {
 				var fn = ns(actionConfig, rawConfig[i]);
 				if ($.isFunction(fn)) {
-					fn.call(actionConfig);
+					prevResult = fn.call(actionConfig, null, null, prevResult);
 				}
 			}
 		}
@@ -198,10 +199,15 @@
 
 			$.each(normalized, function (selector, handlers) {
 				$.each(handlers, function (event, params) {
-					var $target = params.direct ? $(selector) : $root;
-
+					var $target = selector === 'window' ? $(window) : params.direct ? $(selector) : $root;
+					var isHack = false;
+					if (($.browser.opera) && event == 'submit') {
+						isHack = true;
+						event = 'click';
+						selector = selector + ' :submit';
+					}
 					$target.on(event, (params.direct || $.inArray(selector, ['window', 'body', 'document']) > -1 ? undefined : selector), function (e) {
-						var element = this;
+						var element = !isHack ? this : $(this).closest('form').get(0);
 
 						var actions = [];
 						var steps = {};
@@ -250,4 +256,35 @@
 			});
 		}
 	};
+
+	if ($.browser.opera) {
+		$.fn.serializeArray = function () {
+			var rselectTextarea = /^(?:select|textarea)/i,
+				rinput = /^(?:color|date|datetime|datetime-local|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i,
+				rCRLF = /\r?\n/g;
+
+			return this.map(function () {
+				var elements = $(this).find('*');
+
+				return $.makeArray(elements);
+			})
+				.filter(function () {
+					return this.name && !this.disabled &&
+						( this.checked || rselectTextarea.test(this.nodeName) ||
+							rinput.test(this.type) );
+				})
+				.map(
+				function (i, elem) {
+					var val = jQuery(this).val();
+
+					return val == null ?
+						null :
+						jQuery.isArray(val) ?
+							jQuery.map(val, function (val, i) {
+								return { name: elem.name, value: val.replace(rCRLF, "\r\n") };
+							}) :
+						{ name: elem.name, value: val.replace(rCRLF, "\r\n") };
+				}).get();
+		}
+	}
 })(jQuery);
