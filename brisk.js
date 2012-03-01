@@ -92,7 +92,11 @@
 			for (var i = -1, len = rawConfig.length; ++i < len;) {
 				var fn = ns(actionConfig, rawConfig[i]);
 				if ($.isFunction(fn)) {
-					prevResult = fn.call(actionConfig, null, null, prevResult);
+					try {
+						prevResult = fn.call(actionConfig, null, null, prevResult);
+					} catch (e) {
+
+					}
 				}
 			}
 		}
@@ -255,7 +259,7 @@
 				});
 			});
 		}
-	};
+	}
 
 	if ($.browser.opera) {
 		$.fn.serializeArray = function () {
