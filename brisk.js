@@ -238,11 +238,11 @@
 						if (actions.length) {
 							waterfall.apply(this, actions)
 								.fail(function (data) {
-									lastArg = data;
+									lastArg = data || lastArg;
 									for (var i = -1, len = params.fails.length; ++i < len;) {
 										var fn = ns(actionConfig, params.fails[i]);
 										if ($.isFunction(fn)) {
-											fn.call(actionConfig, e, element, data, steps);
+											fn.call(actionConfig, e, element, lastArg, steps);
 										}
 									}
 								})
