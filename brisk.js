@@ -172,6 +172,7 @@
 						 * {
 						 *   event1: {
 						 *     action: ...,
+						 *     always...,
 						 *     fail: ...
 						 *   }
 						 * }
