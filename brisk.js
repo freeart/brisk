@@ -104,7 +104,7 @@
 							while (args.length && lastArg === undefined) {
 								lastArg = args.pop();
 							}
-							return fn.call(actionConfig, e, element, lastArg, steps);
+							return fn.call(actionConfig, null, null, lastArg, steps);
 						});
 					}(fn, i);
 				}
