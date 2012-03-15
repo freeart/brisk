@@ -88,16 +88,29 @@
 		 * { ..., config: ['system.init', 'dropdown.init'], ... }
 		 */
 		if ($.isArray(rawConfig)) {
-			var prevResult;
+			var actions = [];
+			var steps = {};
+			var lastArg;
 			for (var i = -1, len = rawConfig.length; ++i < len;) {
 				var fn = ns(actionConfig, rawConfig[i]);
 				if ($.isFunction(fn)) {
-					try {
-						prevResult = fn.call(actionConfig, null, null, prevResult);
-					} catch (e) {
-
-					}
+					!function (fn, step) {
+						actions.push(function () {
+							if (step > 0) {
+								steps[params.actions[step - 1]] = arguments[step - 1];
+							}
+							var args = [].slice.call(arguments);
+							lastArg = undefined;
+							while (args.length && lastArg === undefined) {
+								lastArg = args.pop();
+							}
+							return fn.call(actionConfig, e, element, lastArg, steps);
+						});
+					}(fn, i);
 				}
+			}
+			if (actions.length) {
+				waterfall.apply(this, actions);
 			}
 		}
 		/*
