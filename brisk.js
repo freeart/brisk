@@ -97,7 +97,7 @@
 					!function (fn, step) {
 						actions.push(function () {
 							if (step > 0) {
-								steps[params.actions[step - 1]] = arguments[step - 1];
+								steps[rawConfig[step - 1]] = arguments[step - 1];
 							}
 							var args = [].slice.call(arguments);
 							lastArg = undefined;
