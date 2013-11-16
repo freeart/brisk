@@ -1,37 +1,43 @@
+App.actions.output = {
+    tryToSave: function (e, el, prevArgs, steps) {
+        $('.output').text('Try To Save');
+    },
+
+    clear: function (e, el, prevArgs, steps) {
+        $('.output').text('');
+    },
+
+    saved: function (e, el, prevArgs, steps) {
+        $('.output').text('Saved');
+    },
+
+    error: function (e, el, prevArgs, steps) {
+        $('.output').text('Error');
+    }
+}
+
 App.actions.rate = {
-	success:function (e, el, prevArgs, steps) {
-		var dfd = $.Deferred();
+    getResponseFromServer: function (e, el, prevArgs, steps) {
+        return $.getJSON('/response.json');
+    },
+    getErrorFromServer: function (e, el, prevArgs, steps) {
+        var dfd = $.Deferred();
 
-		setTimeout(function () {
-			console.log('rate.success', prevArgs, steps);
-			dfd.resolve({
-				".success .like":{
-					"html":'<a href="#" class="like" data-ready="1" data-id="42" data-rate="2" role="block">&hearts;&nbsp;<em>2</em></a>',
-					"mode":"replaceWith"
-				}
-			});
-		}, 1000);
+        setTimeout(function () {
+            console.log('rate.error', prevArgs, steps);
+            dfd.reject(prevArgs);
+        }, 1000);
 
-		return dfd.promise();
-	},
-	error:function (e, el, prevArgs, steps) {
-		var dfd = $.Deferred();
+        return dfd.promise();
+    },
+    actionEmulationOnClient: function (e, el, prevArgs, steps) {
+        if (prevArgs.ready) return false;
 
-		setTimeout(function () {
-			console.log('rate.error', prevArgs, steps);
-			dfd.reject(prevArgs);
-		}, 1000);
-
-		return dfd.promise();
-	},
-	before:function (e, el, prevArgs, steps) {
-		if (prevArgs.ready) return false;
-
-		$(el).find('em').text(prevArgs.rate + 1);
-		console.log('rate.before', prevArgs, steps);
-	},
-	rollback:function (e, el, prevArgs, steps) {
-		$(el).find('em').text(prevArgs.rate);
-		console.log('rate.rollback', prevArgs, steps);
-	}
+        $(el).find('em').text(prevArgs.rate + 1);
+        console.log('rate.before', prevArgs, steps);
+    },
+    rollback: function (e, el, prevArgs, steps) {
+        $(el).find('em').text(prevArgs.rate);
+        console.log('rate.rollback', prevArgs, steps);
+    }
 };

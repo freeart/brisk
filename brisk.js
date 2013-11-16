@@ -219,7 +219,7 @@
 				$.each(handlers, function (event, params) {
 					var $target = selector === 'window' ? $(window) : params.direct ? $(selector) : $root;
 					var isHack = false;
-					if (($.browser.opera) && event == 'submit') {
+					if (/Opera/.test(navigator.userAgent) && event == 'submit') {
 						isHack = true;
 						event = 'click';
 						selector = selector + ' :submit';
@@ -275,7 +275,7 @@
 		}
 	}
 
-	if ($.browser.opera) {
+	if (/Opera/.test(navigator.userAgent)) {
 		$.fn.serializeArray = function () {
 			var rselectTextarea = /^(?:select|textarea)/i,
 				rinput = /^(?:color|date|datetime|datetime-local|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i,

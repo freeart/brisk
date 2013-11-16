@@ -1,0 +1,16 @@
+.like {
+    font-size: 14px;
+    color: #ff5d54;
+}
+
+.output {
+    margin-top: 10px;
+    background-color: #586e85;
+    color: #fff;
+    border: 1px #fff solid;
+    height: 20px;
+    vertical-align: middle;
+    padding: 10px;
+    font-weight: bold;
+    font-size: 16px;
+}
