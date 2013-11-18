@@ -14,3 +14,9 @@
     font-weight: bold;
     font-size: 16px;
 }
+
+.brisk_lock {
+    pointer-events: none;
+    color: grey;
+    opacity: 0.3;
+}
