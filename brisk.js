@@ -256,7 +256,37 @@
                         var lastArg;
 
                         for (var i = -1, len = params.actions.length; ++i < len;) {
-                            var fn = ns(actionConfig, params.actions[i]);
+                            if ($.isArray(params.actions[i])) {
+                                var fn = (function (actions) {
+                                    return function (e, element, lastArg, steps) {
+                                        var self = this;
+                                        var local = [];
+
+                                        for (var s = 0; s < actions.length; s++) {
+                                            var check_fn = ns(actionConfig, actions[s]);
+                                            if ($.isFunction(check_fn)) {
+                                                var res = check_fn.call(self, e, element, lastArg, steps);
+                                                if (res.hasOwnProperty('promise')) {
+                                                    local.push(res);
+                                                } else {
+                                                    var df = $.Deferred();
+                                                    df.resolve(res);
+                                                    local.push(df);
+                                                }
+                                            }
+                                        }
+
+                                        var results = $.Deferred();
+                                        $.when.apply($, local).then(function () {
+                                            var args = Array.prototype.slice.call(arguments, 0);
+                                            results.resolve(args);
+                                        });
+                                        return results.promise();
+                                    }
+                                })(params.actions[i]);
+                            } else {
+                                var fn = ns(actionConfig, params.actions[i]);
+                            }
                             if ($.isFunction(fn)) {
                                 !function (fn, step, name) {
                                     actions.push(function () {
