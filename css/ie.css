@@ -1,0 +1,13 @@
+body
+{
+	width: expression(document.documentElement.clientWidth < 1000 ? "1000px" : "auto");
+}
+#wrapper
+{
+	width: expression(document.documentElement.clientWidth > 1256 ? "1256px" : "auto");
+}
+#header
+{
+	background-position: -9999px -9999px;
+	filter: progid:dximagetransform.microsoft.alphaimageloader(src='images/bg-header.png', sizingmethod='crop');
+}

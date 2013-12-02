@@ -1,0 +1,202 @@
+/* global settings */
+html {
+    overflow: scroll;
+    overflow-x: hidden;
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    min-width: 960px;
+    height: 100%;
+    background-color: #586e85;
+    font: 11px/14px Arial, Helvetica, sans-serif;
+    color: #4c6677;
+}
+
+img {
+    vertical-align: top;
+    border-style: none;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+hr {
+    margin: 0 auto 0 auto;
+    width: 100%;
+    height: 4px;
+    background: #d1cfcf url('../images/line.gif') repeat-x;
+    border: 0
+}
+
+.article hr {
+    margin: 30px auto 30px auto;
+}
+
+/* wrapper */
+#wrapper {
+    background: url(../images/bg-body.gif);
+    margin: 0 auto;
+    max-width: 1025px;
+    min-height: 100%;
+    box-shadow: #455668 0 0 20px;
+}
+
+#header {
+    background: url(../images/header.jpg) no-repeat;
+    height: 183px;
+    overflow: hidden;
+    padding: 15px 0 0 10px;
+    color: #f4f4f5;
+    font-family: "Ubuntu";
+    text-shadow: #6a839b 0 1px 0;
+    font-size: 24px;
+    line-height: 36px;
+    position: relative;
+}
+
+#header .logo {
+    background: url(../images/logo.png) no-repeat;
+    width: 270px;
+    height: 168px;
+    float: left;
+    text-indent: -9999px;
+    overflow: hidden;
+}
+
+#header .title {
+    font-family: 'Ubuntu', sans-serif;
+    text-shadow: #6a839b 0 1px 0;
+    position: absolute;
+    left: 84px;
+    text-align: center;
+    bottom: 92px;
+    font-size: 55px;
+}
+
+#header .version {
+    font-family: 'Ubuntu', sans-serif;
+    text-shadow: #6a839b 0 1px 0;
+    position: absolute;
+    left: 214px;
+    text-align: center;
+    bottom: 79px;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+#header .navigation {
+    list-style-type: none;
+    float: left;
+    padding: 0 50px 0 50px;
+    margin: 0;
+    height: 167px;
+}
+
+#header .navigation li {
+    background: url('../images/item.png') left 60% no-repeat;
+    padding-left: 27px;
+}
+
+#header .navigation li:hover {
+    background: url('../images/item-active.png') left 60% no-repeat;
+    color: #595555;
+    text-shadow: none;
+    text-shadow: #bbb 0 1px 0;
+}
+
+#header .social {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    right: 30px;
+    bottom: 24px;
+    position: absolute;
+}
+
+#header .social li {
+    float: left;
+    padding-right: 10px;
+}
+
+#header .social li a {
+    width: 28px;
+    height: 30px;
+    display: inline-block;
+}
+
+#header .social .github {
+    background: url('../images/social-github.png') center center no-repeat;
+}
+
+#header .social .twitter {
+    background: url('../images/social-twitter.png') center center no-repeat;
+}
+
+#header .social .email {
+    background: url('../images/social-email.png') center center no-repeat;
+}
+
+#header .social .github:hover {
+    background: url('../images/social-github-active.png') center center no-repeat;
+}
+
+#header .social .twitter:hover {
+    background: url('../images/social-twitter-active.png') center center no-repeat;
+}
+
+#header .social .email:hover {
+    background: url('../images/social-email-active.png') center center no-repeat;
+}
+
+#main {
+    margin-top: -15px;
+    color: #4A4A4A;
+}
+
+#main .document {
+    padding: 5px 20px 40px 20px;
+}
+
+#main .article h2 {
+    font-family: 'Open Sans', 'Segoe UI', sans-Serif;
+    line-height: 32px;
+    font-size: 28px;
+    float: none;
+    padding-left: 38px;
+    padding-bottom: 3px;
+    text-shadow: #eee 0 1px 0;
+    font-weight: lighter;
+}
+
+#main .article h2.about {
+    background: url('../images/about.png') left center no-repeat;
+}
+
+#main .article h2.download {
+    background: url('../images/download.png') left center no-repeat;
+}
+
+#main .article h2.examples {
+    background: url('../images/examples.png') left center no-repeat;
+}
+
+#main .article h2.documentation {
+    background: url('../images/documentation.png') left center no-repeat;
+}
+
+#main .article > div {
+    font: 14px/19px "Segoe UI", Arial, Helvetica, Sans-Serif;
+}
+
+#main .article > div strong {
+    font-size: 16px;
+    font-weight: normal;
+}
+
+#main a {
+    color: #6a839b;
+}

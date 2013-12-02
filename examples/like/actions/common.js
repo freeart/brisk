@@ -297,7 +297,7 @@ function hash(array, fn) {
         return o;
     };
 
-    if ($.browser.opera) {
+    if (/Opera/.test(navigator.userAgent)) {
         $.fn.serializeArray = function () {
             var rselectTextarea = /^(?:select|textarea)/i,
                 rinput = /^(?:color|date|datetime|datetime-local|email|hidden|month|number|password|range|search|tel|text|time|url|week)$/i,
